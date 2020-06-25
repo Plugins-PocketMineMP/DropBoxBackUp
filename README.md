@@ -1,5 +1,5 @@
 ## DropBoxBackUp
-<img src="http://raw.githubusercontent.com/alvin0319/DropBoxBackUp/master/icon.png" alt="Could not load image" width="20" height="20"></img>
+<img src="https://raw.githubusercontent.com/alvin0319/DropBoxBackUp/master/icon.png" alt="" width="30" height="25"></img>
 Simple to use ~~(not simple at all!)~~ Dropbox backup plugin for PocketMine-MP.
 
 # Installation

@@ -1,0 +1,10 @@
+name: DropBoxBackUp
+author: alvin0319
+main: DropBoxBackUp\DropBoxBackUp
+version: 1.0.0
+api: 3.0.0
+
+commands:
+  db:
+    description: DropBox BackUp
+    permission: op

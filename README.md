@@ -14,12 +14,6 @@ After restarting the server, type `/db` in the console to start the backup.
 
 Sorry for my bad english :wink:
 
-# Feature
-
-* [x] Use less storage space
-* [ ] Easy to use
-* [ ] Heavy traffic usage
-
 # Test
 
 ![](https://raw.githubusercontent.com/alvin0319/DropBoxBackUp/master/images/1.png)

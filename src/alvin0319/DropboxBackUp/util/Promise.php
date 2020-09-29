@@ -25,7 +25,8 @@
  */
 
 declare(strict_types=1);
-namespace DropBoxBackUp\util;
+
+namespace DropboxBackUp\util;
 
 use Closure;
 
@@ -50,7 +51,6 @@ class Promise{
 	protected $rejected = [];
 
 	public function __construct(){
-
 	}
 
 	public function then(Closure $callback) : Promise{

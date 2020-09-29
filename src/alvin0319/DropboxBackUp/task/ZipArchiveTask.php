@@ -25,9 +25,10 @@
  */
 
 declare(strict_types=1);
-namespace DropBoxBackUp\task;
 
-use DropBoxBackUp\DropBoxBackUp;
+namespace alvin0319\DropboxBackUp\task;
+
+use alvin0319\DropboxBackUp\DropboxBackUp;
 use DropBoxBackUp\util\Promise;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -38,11 +39,13 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 use ZipArchive;
+
 use function explode;
 use function mb_substr_count;
 use function str_replace;
 use function strlen;
 use function substr;
+
 use const DIRECTORY_SEPARATOR;
 
 class ZipArchiveTask extends AsyncTask{
@@ -87,7 +90,7 @@ class ZipArchiveTask extends AsyncTask{
 		$promise = $result[0];
 		/** @var CommandSender $sender */
 		$sender = $result[1];
-		$promise->resolve([$this->getResult() . $this->fileName, DropBoxBackUp::$id, DropBoxBackUp::$token]);
+		$promise->resolve([$this->getResult() . $this->fileName, DropboxBackUp::$id, DropBoxBackUp::$token]);
 		if($sender instanceof Player){
 			if($sender->isOnline()){
 				$sender->sendMessage("Backup completed!");
@@ -102,11 +105,8 @@ class ZipArchiveTask extends AsyncTask{
 	public function doLinuxBackUp() : void{
 		$path = str_replace(explode('/', $this->path)[mb_substr_count($this->path, '/', 'utf-8') - 1] . '/', '', $this->path);
 		$zip = new ZipArchive();
-		$zip->open($path . $this->fileName, ZipArchive::CREATE);
-		$files = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator($this->path),
-			RecursiveIteratorIterator::LEAVES_ONLY
-		);
+		$zip->open($path . $this->fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path), RecursiveIteratorIterator::LEAVES_ONLY);
 		/** @var SplFileInfo $objects */
 		foreach($files as $objects){
 			if(!$objects->isDir()){
@@ -119,13 +119,9 @@ class ZipArchiveTask extends AsyncTask{
 	public function doWindowsBackUp() : void{
 		$path = str_replace(explode('\\', $this->path)[mb_substr_count($this->path, '\\', 'utf-8') - 1] . '\\', '', $this->path);
 		$zip = new ZipArchive();
-		$zip->open($path . $this->fileName, \ZipArchive::CREATE);
-		$files = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator($this->path),
-			RecursiveIteratorIterator::LEAVES_ONLY
-		);
-		/** @var SplFileInfo $objects
-		 */
+		$zip->open($path . $this->fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path), RecursiveIteratorIterator::LEAVES_ONLY);
+		/** @var SplFileInfo $objects */
 		foreach($files as $objects){
 			if(!$objects->isDir()){
 				$zip->addFile($objects->getRealPath(), substr($objects->getRealPath(), strlen($this->path)));

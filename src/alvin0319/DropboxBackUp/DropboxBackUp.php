@@ -25,10 +25,11 @@
  */
 
 declare(strict_types=1);
-namespace DropBoxBackUp;
 
-use DropBoxBackUp\task\SendTask;
-use DropBoxBackUp\task\ZipArchiveTask;
+namespace alvin0319\DropboxBackUp;
+
+use alvin0319\DropboxBackUp\task\SendTask;
+use alvin0319\DropboxBackUp\task\ZipArchiveTask;
 use DropBoxBackUp\util\Promise;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -36,11 +37,11 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 
-class DropBoxBackUp extends PluginBase{
+class DropboxBackUp extends PluginBase{
 
-	static $id = 0;
-	static $fileName = "";
-	static $token = "";
+	public static $id = 0;
+	public static $fileName = "";
+	public static $token = "";
 
 	public function onEnable() : void{
 		$config = new Config($this->getDataFolder() . "Config.yml", Config::YAML, [

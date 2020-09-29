@@ -25,12 +25,14 @@
  */
 
 declare(strict_types=1);
-namespace DropBoxBackUp\task;
 
-use DropBoxBackUp\DropBoxBackUp;
+namespace alvin0319\DropboxBackUp\task;
+
+use alvin0319\DropboxBackUp\DropboxBackUp;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\UUID;
+
 use function curl_close;
 use function curl_exec;
 use function curl_setopt;
@@ -43,7 +45,7 @@ use function json_decode;
 use function json_encode;
 use function mt_rand;
 use function unlink;
-use function var_dump;
+
 use const CURLOPT_CUSTOMREQUEST;
 use const CURLOPT_HTTPHEADER;
 use const CURLOPT_INFILE;
@@ -73,7 +75,8 @@ class SendTask extends AsyncTask{
 			"mode" => $this->fileId !== 0 ? "overwrite" : "add"
 		];
 
-		$cheaders = ['Authorization: Bearer ' . $this->token,
+		$cheaders = [
+			'Authorization: Bearer ' . $this->token,
 			'Content-Type: application/octet-stream',
 			'Dropbox-API-Arg: ' . json_encode($arg)
 		];
@@ -97,8 +100,7 @@ class SendTask extends AsyncTask{
 
 	public function onCompletion(Server $server) : void{
 		$server->getLogger()->notice("Succeed to upload dropbox.");
-		var_dump($this->getResult());
-		DropBoxBackUp::$id = is_array($this->getResult()) ? $this->getResult()["id"] ?? mt_rand(1, 100) . UUID::fromRandom()->toString() : mt_rand(1, 100) . UUID::fromRandom()->toString();
+		DropboxBackUp::$id = is_array($this->getResult()) ? $this->getResult()["id"] ?? mt_rand(1, 100) . UUID::fromRandom()->toString() : mt_rand(1, 100) . UUID::fromRandom()->toString();
 		if(file_exists($this->filename)){
 			@unlink($this->filename);
 		}

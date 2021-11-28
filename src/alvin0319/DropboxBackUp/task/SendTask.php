@@ -57,7 +57,7 @@ class SendTask extends AsyncTask{
 
 	public function __construct(
 		protected string $filename,
-		protected $fileId,
+		protected int|string $fileId,
 		protected string $token
 	){}
 
@@ -99,4 +99,5 @@ class SendTask extends AsyncTask{
 			@unlink($this->filename);
 		}
 	}
+	
 }

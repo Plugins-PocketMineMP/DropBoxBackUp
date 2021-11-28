@@ -39,7 +39,7 @@ use pocketmine\utils\TextFormat;
 
 final class DropboxBackUp extends PluginBase{
 
-	public static $id = 0;
+	public static int|string $id = 0;
 	public static string $fileName = "";
 	public static string $token = "";
 

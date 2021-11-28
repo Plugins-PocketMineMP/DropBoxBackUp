@@ -30,18 +30,18 @@ namespace alvin0319\DropboxBackUp;
 
 use alvin0319\DropboxBackUp\task\SendTask;
 use alvin0319\DropboxBackUp\task\ZipArchiveTask;
-use DropBoxBackUp\util\Promise;
+use alvin0319\DropboxBackUp\util\Promise;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 
-class DropboxBackUp extends PluginBase{
+final class DropboxBackUp extends PluginBase{
 
 	public static $id = 0;
-	public static $fileName = "";
-	public static $token = "";
+	public static string $fileName = "";
+	public static string $token = "";
 
 	public function onEnable() : void{
 		$config = new Config($this->getDataFolder() . "Config.yml", Config::YAML, [
@@ -78,4 +78,5 @@ class DropboxBackUp extends PluginBase{
 			$this->getServer()->getAsyncPool()->submitTask(new SendTask($result[0], $result[1], $result[2]));
 		});
 	}
+	
 }

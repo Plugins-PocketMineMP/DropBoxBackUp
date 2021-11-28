@@ -29,7 +29,7 @@ declare(strict_types=1);
 namespace alvin0319\DropboxBackUp\task;
 
 use alvin0319\DropboxBackUp\DropboxBackUp;
-use DropBoxBackUp\util\Promise;
+use alvin0319\DropBoxBackUp\util\Promise;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\scheduler\AsyncTask;
@@ -50,14 +50,15 @@ use const DIRECTORY_SEPARATOR;
 
 class ZipArchiveTask extends AsyncTask{
 
-	protected $path;
+	protected string $path;
 
-	protected $os;
+	protected string $os;
 
-	protected $fileName;
+	protected string $fileName;
 
 	public function __construct(Promise $promise, string $path, string $fileName, CommandSender $sender){
-		$this->storeLocal([$promise, $sender]);
+		$this->storeLocal('promise', $promise);
+		$this->storeLocal('sender', $sender);
 		if(substr($path, -1) !== DIRECTORY_SEPARATOR){
 			$path .= DIRECTORY_SEPARATOR;
 		}
@@ -84,12 +85,12 @@ class ZipArchiveTask extends AsyncTask{
 		}
 	}
 
-	public function onCompletion(Server $server) : void{
+	public function onCompletion() : void{
+		$server = Server::getInstance();
 		/** @var Promise $promise */
-		$result = $this->fetchLocal();
-		$promise = $result[0];
+		$promise = $this->fetchLocal('promise');
 		/** @var CommandSender $sender */
-		$sender = $result[1];
+		$sender = $this->fetchLocal('sender');
 		$promise->resolve([$this->getResult() . $this->fileName, DropboxBackUp::$id, DropBoxBackUp::$token]);
 		if($sender instanceof Player){
 			if($sender->isOnline()){

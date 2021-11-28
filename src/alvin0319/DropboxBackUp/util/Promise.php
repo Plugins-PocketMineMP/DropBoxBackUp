@@ -26,11 +26,11 @@
 
 declare(strict_types=1);
 
-namespace DropboxBackUp\util;
+namespace alvin0319\DropBoxBackUp\util;
 
 use Closure;
 
-class Promise{
+final class Promise{
 
 	public const PENDING = "pending";
 
@@ -41,17 +41,13 @@ class Promise{
 	/** @var mixed */
 	protected $value = null;
 
-	/** @var string */
-	protected $now = self::PENDING;
+	protected string $now = self::PENDING;
 
 	/** @var Closure[] */
-	protected $fulfilled = [];
+	protected array $fulfilled = [];
 
 	/** @var Closure[] */
-	protected $rejected = [];
-
-	public function __construct(){
-	}
+	protected array $rejected = [];
 
 	public function then(Closure $callback) : Promise{
 		if($this->now === self::FULFILLED){
@@ -92,4 +88,5 @@ class Promise{
 		$this->fulfilled = $this->rejected = [];
 		return $this;
 	}
+	
 }

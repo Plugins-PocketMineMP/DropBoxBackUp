@@ -1,8 +1,8 @@
 name: DropboxBackUp
-author: alvin0319
+author: [alvin0319, skymin]
 main: alvin0319\DropboxBackUp\DropboxBackUp
-version: 1.0.1
-api: 3.0.0
+version: 2.0.0
+api: 4.0.0
 
 commands:
   db:

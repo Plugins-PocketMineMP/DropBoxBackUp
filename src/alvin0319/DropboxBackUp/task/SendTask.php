@@ -31,7 +31,7 @@ namespace alvin0319\DropboxBackUp\task;
 use alvin0319\DropboxBackUp\DropboxBackUp;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
-use pocketmine\utils\UUID;
+use Ramsey\Uuid\Uuid;
 
 use function curl_close;
 use function curl_exec;
@@ -55,17 +55,11 @@ use const CURLOPT_RETURNTRANSFER;
 
 class SendTask extends AsyncTask{
 
-	protected $filename;
-
-	protected $fileId;
-
-	protected $token;
-
-	public function __construct(string $filename, $fileId, string $token){
-		$this->filename = $filename;
-		$this->fileId = $fileId;
-		$this->token = $token;
-	}
+	public function __construct(
+		protected string $filename,
+		protected $fileId,
+		protected string $token
+	){}
 
 	public function onRun() : void{
 		$fp = fopen($this->filename, 'rb');
@@ -98,9 +92,9 @@ class SendTask extends AsyncTask{
 		$this->setResult($result);
 	}
 
-	public function onCompletion(Server $server) : void{
-		$server->getLogger()->notice("Succeed to upload dropbox.");
-		DropboxBackUp::$id = is_array($this->getResult()) ? $this->getResult()["id"] ?? mt_rand(1, 100) . UUID::fromRandom()->toString() : mt_rand(1, 100) . UUID::fromRandom()->toString();
+	public function onCompletion() : void{
+		Server::getInstance()->getLogger()->notice("Succeed to upload dropbox.");
+		DropboxBackUp::$id = is_array($this->getResult()) ? $this->getResult()["id"] ?? mt_rand(1, 100) . Uuid::uuid4()->toString() : mt_rand(1, 100) . Uuid::uuid4()->toString();
 		if(file_exists($this->filename)){
 			@unlink($this->filename);
 		}
